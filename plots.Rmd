@@ -1,0 +1,83 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r Libraries & Data}
+library(ggplot2)
+library(readxl)
+ADL <- read_excel("ADL.xlsx", col_types = "numeric")
+ADL <- ADL / 100
+col1 <- c("1", "2", "3", "4", "5", "6") 
+
+ADLUntrained <- ADL[0:6,]
+ADLUntrained$Untrained <- col1
+ADLTrained <- ADL[9:14,]
+ADLTrained$Untrained <- col1
+ADLBERTUntrained <- ADL[18:23,]
+ADLBERTUntrained$Untrained <- col1
+ADLBERTTrained <- ADL[26:31,]
+ADLBERTTrained$Untrained <- col1
+```
+```{r Plot DistilBERT Untrained}
+ggplot(data = ADLUntrained, aes(x = Untrained, group = 1)) +
+  geom_line(aes(y = SentLen), color="blue") +
+  geom_line(aes(y = WC), color="red") +
+  geom_line(aes(y = TreeDepth), color="yellow") +
+  geom_line(aes(y = TopConst), color="green") +
+  geom_line(aes(y = BShift), color="purple") +
+  geom_line(aes(y = Tense), color="pink") +
+  geom_line(aes(y = SubjNum), color="black") +
+  geom_line(aes(y = ObjNum), color="orange") +
+  geom_line(aes(y = SOMO), color="grey") +
+  geom_line(aes(y = CoordInv), color="white") +
+  ylim(0, 1)
+```
+```{r Plot DistilBERT Trained}
+ggplot(data = ADLTrained, aes(x = Untrained, group = 1)) +
+  geom_line(aes(y = SentLen), color="blue") +
+  geom_line(aes(y = WC), color="red") +
+  geom_line(aes(y = TreeDepth), color="yellow") +
+  geom_line(aes(y = TopConst), color="green") +
+  geom_line(aes(y = BShift), color="purple") +
+  geom_line(aes(y = Tense), color="pink") +
+  geom_line(aes(y = SubjNum), color="black") +
+  geom_line(aes(y = ObjNum), color="orange") +
+  geom_line(aes(y = SOMO), color="grey") +
+  geom_line(aes(y = CoordInv), color="white") +
+  ylim(0,1)  +
+  labs ( title = "Probing Tasks on DistilBERT per layer", y = "Probe Accuracy",  x = "Layers") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+```{r Plot Bert Untrained}
+ggplot(data = ADLBERTUntrained, aes(x = Untrained, group = 1)) +
+  geom_line(aes(y = SentLen), color="blue") +
+  geom_line(aes(y = WC), color="red") +
+  geom_line(aes(y = TreeDepth), color="yellow") +
+  geom_line(aes(y = TopConst), color="green") +
+  geom_line(aes(y = BShift), color="purple") +
+  geom_line(aes(y = Tense), color="pink") +
+  geom_line(aes(y = SubjNum), color="black") +
+  geom_line(aes(y = ObjNum), color="orange") +
+  geom_line(aes(y = SOMO), color="grey") +
+  geom_line(aes(y = CoordInv), color="white") +
+  ylim(0, 100) + 
+  ylab("Probe Accuracy") + xlab("Layers")
+```
+```{r Plot Bert Trained}
+ggplot(data = ADLBERTTrained, aes(x = Untrained, group = 1)) +
+  geom_line(aes(y = SentLen), color="blue") +
+  geom_line(aes(y = WC), color="red") +
+  geom_line(aes(y = TreeDepth), color="yellow") +
+  geom_line(aes(y = TopConst), color="green") +
+  geom_line(aes(y = BShift), color="purple") +
+  geom_line(aes(y = Tense), color="pink") +
+  geom_line(aes(y = SubjNum), color="black") +
+  geom_line(aes(y = ObjNum), color="orange") +
+  geom_line(aes(y = SOMO), color="grey") +
+  geom_line(aes(y = CoordInv), color="white") +
+  ylim(0,1)  +
+  labs ( title = "Probing Tasks on BERT per layer", y = "Probe Accuracy",  x = "Layers") +
+  theme(plot.title = element_text(hjust = 0.5))
+  
+```
